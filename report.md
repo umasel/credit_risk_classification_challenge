@@ -1,27 +1,49 @@
-# Module 12 Report Template
+# Overview of the Analysis
 
-## Overview of the Analysis
+The objective of this analysis was to develop a supervised machine learning model capable of predicting whether a loan is healthy or high-risk. The dataset utilized consisted of 77,500 records, each containing various attributes related to the loan (such as amount and interest rate) and the borrower's financial status (including income, debt, and accounts), along with a column indicating whether the loan was classified as healthy or high-risk. Out of the total loans, only 2,500 were categorized as high-risk.
 
-In this section, describe the analysis you completed for the machine learning models used in this Challenge. This might include:
+The machine learning process was conducted as follows:
+## Data Preparation:
+- The dataset was divided into labels and features, with the loan status (healthy or high-risk) serving as the label, and the remaining seven columns representing the features.
 
-* Explain the purpose of the analysis.
-* Explain what financial information the data was on, and what you needed to predict.
-* Provide basic information about the variables you were trying to predict (e.g., `value_counts`).
-* Describe the stages of the machine learning process you went through as part of this analysis.
-* Briefly touch on any methods you used (e.g., `LogisticRegression`, or any other algorithm).
+## Data Splitting:
+- The data was split into training and testing datasets.
+
+## Model Selection and Training:
+- A Logistic Regression model from the sklearn library was chosen, utilizing the Limited-memory BFGS ('lbfgs') solver. Logistic Regression was selected due to its suitability for binary classification problems, such as determining whether a loan is healthy or high-risk.
+- The model was trained using the training data.
+
+## Prediction and Evaluation:
+- Predictions were generated using the test data.
+- The model's performance was assessed by comparing the predictions with the actual test labels.
 
 ## Results
 
-Using bulleted lists, describe the accuracy scores and the precision and recall scores of all machine learning models.
-
-* Machine Learning Model 1:
-    * Description of Model 1 Accuracy, Precision, and Recall scores.
-
+- Accuracy: 0.99
+- Balanced Accuracy: 0.95
+- Precision
+- Healthy: 1.00
+- High-Risk: 0.85
+- Recall
+- Healthy: 0.99
+- High-Risk: 0.91
+  
 ## Summary
 
-Summarise the results of the machine learning models, and include a recommendation on the model to use, if any. For example:
+The Logistic Regression model demonstrates strong performance in predicting healthy loans. However, it incorrectly classifies 10% of high-risk loans as healthy based on the test data. Although none of the loans used for training are for very large amounts (all under $24,000), a loan defaulting early in its term could result in a significant financial loss, potentially outweighing the interest earned from multiple healthy loans.
 
-* Which one seems to perform best? How do you know it performs best?
-* Does performance depend on the problem we are trying to solve? (For example, is it more important to predict the `1`'s, or predict the `0`'s? )
+A notable challenge is the imbalance in the dataset, with very few high-risk loans compared to the number of healthy loans. Increasing the number of high-risk loans in the training dataset could potentially enhance the model's performance.
 
-If you do not recommend any of the models, please justify your reasoning.
+In the context of loan classification, preventing high-risk loans is more crucial than approving healthy ones, as a single default can incur greater losses than the interest earned from several healthy loans.
+
+## Model Pros and Cons
+
+Pros:
+- Excellent prediction accuracy for healthy loans.
+- Ample data points for healthy loans.
+Cons:
+- Limited data points for high-risk loans.
+- Loan values capped at $24,000.
+- 10% misclassification rate for high-risk loans.
+
+If this model is applied only to loans under $24,000, and if the historical ratio of healthy to high-risk loans is consistent with the dataset (30 to 1), the model may be adequate. Otherwise, due to the increased risk, it would not be recommended. Additionally, the model provides binary classifications (healthy/risky) without offering a probability score, which could be useful for more nuanced decision-making, especially for loans that are borderline.
